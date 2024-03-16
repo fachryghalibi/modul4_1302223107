@@ -33,9 +33,88 @@ public class Program
         {
             Console.WriteLine("buah tidak valid");
         }
+
+        
+        
+            PosisiKarakterGame posisi = new PosisiKarakterGame();
+            posisi.DisplayPosisition();
+            posisi.ChangeState(PosisiKarakterGame.State.BERDIRI);
+        
     }
 }
 
 
 
+
+public class PosisiKarakterGame
+{
+    public enum State { TENGKURAP, JONGKOK, BERDIRI, TERBANG }
+    State state = State.BERDIRI;
+    public void ChangeState(State newState)
+    {
+        state = newState;
+        while (true)
+        {
+            string command = Console.ReadLine();
+
+            switch (state)
+            {
+                case State.TENGKURAP:
+                    if (command == "w")
+                    {
+                        state = State.JONGKOK;
+                        Console.WriteLine("tombol arah atas ditekan");
+                        DisplayPosisition();
+                    }
+                    break;
+                case State.JONGKOK:
+                    if (command == "s")
+                    {
+                        state = State.TENGKURAP;
+                        Console.WriteLine("tombol arah bawah ditekan");
+                        DisplayPosisition();
+                    }
+                    else if (command == "w")
+                    {
+                        state = State.BERDIRI;
+                        Console.WriteLine("tombol arah atas ditekan");
+                        DisplayPosisition();
+                    }
+                    break;
+                case State.BERDIRI:
+                    if (command == "w")
+                    {
+                        state = State.TERBANG;
+                        Console.WriteLine("tombol arah atas ditekan");
+                        DisplayPosisition();
+                    }
+                    else if (command == "s")
+                    {
+                        state = State.JONGKOK;
+                        Console.WriteLine("tombol arah bawah ditekan");
+                        DisplayPosisition();
+                    }
+                    break;
+                case State.TERBANG:
+                    if (command == "x")
+                    {
+                        state = State.JONGKOK;
+                        DisplayPosisition();
+                    }
+                    else if (command == "s")
+                    {
+                        state = State.BERDIRI;
+                        Console.WriteLine("tombol arah bawah ditekan");
+                        DisplayPosisition();
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void DisplayPosisition()
+    {
+        Console.WriteLine("Posisi Sekarang: " + state);
+    }
+}
 
